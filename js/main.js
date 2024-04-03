@@ -17,6 +17,8 @@
 
 // track the current screen
 let current_screen = 1;
+let ninth_symbol = "&"; // default
+const symbol_array = ["@", "#", "$", "%", "&", "*", "A", "B", "C", "D"]; // contains 10 symbols total
 
 // grab our containers
 const main_container = document.getElementById("main");
@@ -34,7 +36,7 @@ const page_1 = {
 
 const page_2 = {
   screen_num: 2,
-  header: "Pick a number from 1-99!",
+  header: "Pick a number from 10-99!",
   return_button: true, // displays the return button
   next_button: "NEXT", // displays the text on the button
   hint_text: "When you have your number, click NEXT!",
@@ -58,7 +60,7 @@ const page_4 = {
 
 const page_5 = {
   screen_num: 5,
-  header: "SPECIAL_SYMBOLS", // tells the script to display the symbol list with randomized symbols
+  header: "SPECIAL_SYMBOLS",
   return_button: true,
   next_button: "REVEAL",
   hint_text: "Find your new number. Note the symbol besides the number!",
@@ -96,6 +98,14 @@ function change_page(header_text, next_button, hint_text, return_button) {
   let node = document.createElement("h1");
   node.classList.add("m-5")
   node.textContent = header_text;
+
+  if (current_screen == 5) { // special override for the fifth screen to show the symbols and enable scrolling
+    node.style.overflow = "scroll"
+    fill_symbol_list(node)
+  } else if (current_screen == 6) { // special override
+    node.textContent = ninth_symbol // randomized on the previous screen
+  }
+
   main_container.appendChild(node);
 
   // middle elements
@@ -109,6 +119,11 @@ function change_page(header_text, next_button, hint_text, return_button) {
   if (hint_text) {
     node = document.createElement("p");
     node.classList.add("m-5")
+
+    if (current_screen == 6) {
+      hint_text = hint_text.replace("NINTH_SYMBOL", ninth_symbol);
+    }
+
     node.textContent = hint_text;
     main_container.appendChild(node);
   }
@@ -165,6 +180,47 @@ function clear_child_elements(parent_element) {
 
   const node_list = Array.from(parent_element.childNodes); //grab a copy of the array to iterate across
   node_list.forEach((element) => element.remove());
+}
+
+function random_integer(min, max) { // returns a random integer between min and max, max excluded
+  return Math.floor(Math.random() * (max - min) ) + min;
+}
+
+function fill_symbol_list(node) {
+  // randomly assign symbols to each number between 10 and 99, repeating only once every symbol has been used
+  // one symbol is selected to be the special symbol for integers divisible by 9 (18, 27, etc)
+  // these integers are only ever to receive that symbol, never another
+
+  node.textContent = ""; // clear existing text
+
+  let symbol_array_copy = Array.from(symbol_array); // grab a copy to work on
+  let random_number = random_integer(0, 10); // returns a random integer between 0 and 9
+  
+  ninth_symbol = symbol_array_copy[random_number]; // grab and set that symbol as our special 9th symbol
+  symbol_array_copy.splice(random_number, 1); // then remove that element from the copied array
+
+  const symbol_array_pool = Array.from(symbol_array_copy); // now save a semi-permanent copy of that new array, missing the special symbol
+
+  // now fill out our node's text content with the symbols, including <br> as a line break between each one
+  for (let i = 10; i <= 99; i++) { // now we iterate, dishing out special symbols to each number between 10 and 99, inclusive, EXCEPT multiples of 9
+    if (i % 9 == 0) { // divisible by 9
+      node.textContent += String(i) + " - " + ninth_symbol; //TODO: line breaks
+      continue; // skip the rest for this loop
+    } // else, 
+
+    if (symbol_array_copy.length == 0) { // array empty, refill it from our pool
+      symbol_array_copy = Array.from(symbol_array_pool);
+    }
+
+    random_number = random_integer(0, symbol_array_copy.length); // exclusive max
+    let result_symbol = symbol_array_copy[random_number]; // grab the random symbol...
+    symbol_array_copy.splice(random_number, 1); // ...and remove it from our copy!
+
+    // finally, add it to our textContent
+    node.textContent += String(i) + " - " + result_symbol; //TODO: line breaks
+    
+    // continue,
+  }
 }
 
 init();
