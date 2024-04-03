@@ -19,6 +19,7 @@
 let current_screen = 1;
 
 // grab our containers
+const main_container = document.getElementById("main");
 const top_container = document.getElementById("top");
 const mid_container = document.getElementById("middle");
 const bot_container = document.getElementById("bottom");
@@ -83,68 +84,49 @@ function load_page_data(obj) {
   // update page tracker
   current_screen = obj.screen_num;
 
-  // display the header in the TOP container
-  change_top(obj.header);
-
-  // display the "NEXT" button and any additional text
-  change_middle(obj.next_button, obj.hint_text);
-
-  // change the bottom container and its button
-  change_bottom(obj.return_button);
+  // update the page
+  change_page(obj.header, obj.next_button, obj.hint_text, obj.return_button);
 }
 
-// changes the header based on header_text
-function change_top(header_text) {
-  // clear any existing elements in the top container
-  clear_child_elements(top_container);
+// changes the page
+function change_page(header_text, next_button, hint_text, return_button) {
+  clear_child_elements(main_container);
 
-  // add a new header element with header_text
+  // top elements
   const node = document.createElement("h1");
   node.textContent = header_text;
-  top_container.appendChild(node);
-}
+  main_container.appendChild(node);
 
-// changes the middle container, including its next button
-function change_middle(next_button, hint_text) {
-  // both next_button and hint_text should be strings
-  clear_child_elements(mid_container);
-  
+  // middle elements
   if (next_button) { // empty string is FALSE and ignored
     const node = instance_button();
     node.textContent = next_button;
     node.addEventListener("click", next_page);
-    mid_container.appendChild(node);
+    main_container.appendChild(node);
   }
 
   if (hint_text) {
     const node = document.createElement("p");
     node.textContent = hint_text;
-    mid_container.appendChild(node);
+    main_container.appendChild(node);
   }
-}
 
-// changes the bottom container
-function change_bottom(return_button) {
-  // return_button is true/false
-
-  clear_child_elements(bot_container);
-
+  // end elements
   if (return_button) {
     // create the return button that sends the page back to the first page
     const node = instance_button();
     //node.style.backgroundImage = "img/icons/arrow-counterclockwise.svg";
     node.textContent = "RESTART";
     node.addEventListener("click", reset);
-    bot_container.appendChild(node);
+    main_container.appendChild(node);
   } else {
     // create the GO button that takes the player to the next page
     const node = instance_button();
     //node.style.backgroundImage = "img/icons/arrow-right.svg";
     node.textContent = "GO";
     node.addEventListener("click", next_page);
-    bot_container.appendChild(node);
+    main_container.appendChild(node);
   }
-
 }
 
 function instance_button() {
