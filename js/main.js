@@ -93,20 +93,22 @@ function change_page(header_text, next_button, hint_text, return_button) {
   clear_child_elements(main_container);
 
   // top elements
-  const node = document.createElement("h1");
+  let node = document.createElement("h1");
+  node.classList.add("m-5")
   node.textContent = header_text;
   main_container.appendChild(node);
 
   // middle elements
   if (next_button) { // empty string is FALSE and ignored
-    const node = instance_button();
+    node = instance_button();
     node.textContent = next_button;
     node.addEventListener("click", next_page);
     main_container.appendChild(node);
   }
 
   if (hint_text) {
-    const node = document.createElement("p");
+    node = document.createElement("p");
+    node.classList.add("m-5")
     node.textContent = hint_text;
     main_container.appendChild(node);
   }
@@ -114,14 +116,14 @@ function change_page(header_text, next_button, hint_text, return_button) {
   // end elements
   if (return_button) {
     // create the return button that sends the page back to the first page
-    const node = instance_button();
+    node = instance_button();
     //node.style.backgroundImage = "img/icons/arrow-counterclockwise.svg";
     node.textContent = "RESTART";
     node.addEventListener("click", reset);
     main_container.appendChild(node);
   } else {
     // create the GO button that takes the player to the next page
-    const node = instance_button();
+    node = instance_button();
     //node.style.backgroundImage = "img/icons/arrow-right.svg";
     node.textContent = "GO";
     node.addEventListener("click", next_page);
@@ -131,8 +133,7 @@ function change_page(header_text, next_button, hint_text, return_button) {
 
 function instance_button() {
   const node = document.createElement("button");
-  node.classList.add("btn")
-  node.classList.add("btn-outline-primary")
+  node.classList.add("btn", "btn-outline-primary", "m-5")
   return node
 }
 
