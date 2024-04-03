@@ -28,6 +28,7 @@ const page_1 = {
   header: "I Can Read Your Mind",
   return_button: false, // displays a GO button
   next_button: "", // empty string means NO next button
+  hint_text: "", // empty string means NO hint text
 };
 
 const page_2 = {
@@ -35,31 +36,42 @@ const page_2 = {
   header: "Pick a number from 1-99!",
   return_button: true, // displays the return button
   next_button: "NEXT", // displays the text on the button
+  hint_text: "When you have your number, click NEXT!",
 };
 
 const page_3 = {
   screen_num: 3,
   header: "Add both digits together to get a new number.",
   return_button: true,
+  next_button: "NEXT",
+  hint_text: "EX: 14 is 1 + 4 = 5. Click NEXT to proceed!",
 };
 
 const page_4 = {
   screen_num: 4,
   header: "Subtract your new number from your original number.",
   return_button: true,
+  next_button: "NEXT",
+  hint_text: "EX: 14 - 5 = 9. Click NEXT to proceed!",
 };
 
 const page_5 = {
   screen_num: 5,
   header: "SPECIAL_SYMBOLS", // tells the script to display the symbol list with randomized symbols
   return_button: true,
+  next_button: "REVEAL",
+  hint_text: "Find your new number. Note the symbol besides the number!",
 };
 
 const page_6 = {
   screen_num: 6,
   header: "NINTH_SYMBOL", // tells the script to display whatever symbol that it has selected for multiples of 9
   return_button: true,
+  next_button: "",
+  hint_text: "Your symbol is: NINTH_SYMBOL",
 };
+
+const pages = [page_1, page_2, page_3, page_4, page_5, page_6]
 
 function init() {
   load_page_data(page_1);
@@ -73,6 +85,9 @@ function load_page_data(obj) {
 
   // display the header in the TOP container
   change_top(obj.header);
+
+  // display the "NEXT" button and any additional text
+  change_middle(obj.next_button, obj.hint_text);
 
   // change the bottom container and its button
   change_bottom(obj.return_button);
@@ -89,20 +104,83 @@ function change_top(header_text) {
   top_container.appendChild(node);
 }
 
+// changes the middle container, including its next button
+function change_middle(next_button, hint_text) {
+  // both next_button and hint_text should be strings
+  clear_child_elements(mid_container);
+  
+  if (next_button) { // empty string is FALSE and ignored
+    const node = instance_button();
+    node.textContent = next_button;
+    node.addEventListener("click", next_page);
+    mid_container.appendChild(node);
+  }
+
+  if (hint_text) {
+    const node = document.createElement("p");
+    node.textContent = hint_text;
+    mid_container.appendChild(node);
+  }
+}
+
+// changes the bottom container
 function change_bottom(return_button) {
-  // changes the bottom container, primarily its return button
+  // return_button is true/false
+
+  clear_child_elements(bot_container);
+
   if (return_button) {
     // create the return button that sends the page back to the first page
+    const node = instance_button();
+    //node.style.backgroundImage = "img/icons/arrow-counterclockwise.svg";
+    node.textContent = "RESTART";
+    node.addEventListener("click", reset);
+    bot_container.appendChild(node);
   } else {
     // create the GO button that takes the player to the next page
-    
+    const node = instance_button();
+    //node.style.backgroundImage = "img/icons/arrow-right.svg";
+    node.textContent = "GO";
+    node.addEventListener("click", next_page);
+    bot_container.appendChild(node);
   }
 
 }
 
+function instance_button() {
+  const node = document.createElement("button");
+  node.classList.add("btn")
+  node.classList.add("btn-outline-primary")
+  return node
+}
+
+function next_page() {
+  // identifies the next page and proceeds to it
+
+  current_screen += 1;
+  let next_screen;
+
+  for (let i = 0; i < pages.length; i++) {
+    let new_page = pages[i];
+    if (new_page.screen_num == current_screen) {
+      next_screen = new_page;
+      break;
+    }
+  }
+
+  load_page_data(next_screen);
+}
+
+function reset() {
+  // resets to the first page
+  current_screen = 1;
+  load_page_data(page_1);
+}
+
 function clear_child_elements(parent_element) {
   // clears the child elements of a given element
-  const node_list = parent_element.childNodes;
+
+  const node_list = Array.from(parent_element.childNodes); //grab a copy of the array to iterate across
   node_list.forEach((element) => element.remove());
 }
 
