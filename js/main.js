@@ -32,25 +32,33 @@ const page_1 = {
 
 const page_2 = {
   screen_num: 2,
-  header: "Pick a number from 1-99",
+  header: "Pick a number from 1-99!",
   return_button: true, // displays the return button
   next_button: "NEXT", // displays the text on the button
 };
 
 const page_3 = {
   screen_num: 3,
+  header: "Add both digits together to get a new number.",
+  return_button: true,
 };
 
 const page_4 = {
   screen_num: 4,
+  header: "Subtract your new number from your original number.",
+  return_button: true,
 };
 
 const page_5 = {
   screen_num: 5,
+  header: "SPECIAL_SYMBOLS", // tells the script to display the symbol list with randomized symbols
+  return_button: true,
 };
 
 const page_6 = {
   screen_num: 6,
+  header: "NINTH_SYMBOL", // tells the script to display whatever symbol that it has selected for multiples of 9
+  return_button: true,
 };
 
 function init() {
@@ -59,6 +67,43 @@ function init() {
 
 function load_page_data(obj) {
   // takes an object containing the page data and loads that into the page
+
+  // update page tracker
+  current_screen = obj.screen_num;
+
+  // display the header in the TOP container
+  change_top(obj.header);
+
+  // change the bottom container and its button
+  change_bottom(obj.return_button);
+}
+
+// changes the header based on header_text
+function change_top(header_text) {
+  // clear any existing elements in the top container
+  clear_child_elements(top_container);
+
+  // add a new header element with header_text
+  const node = document.createElement("h1");
+  node.textContent = header_text;
+  top_container.appendChild(node);
+}
+
+function change_bottom(return_button) {
+  // changes the bottom container, primarily its return button
+  if (return_button) {
+    // create the return button that sends the page back to the first page
+  } else {
+    // create the GO button that takes the player to the next page
+    
+  }
+
+}
+
+function clear_child_elements(parent_element) {
+  // clears the child elements of a given element
+  const node_list = parent_element.childNodes;
+  node_list.forEach((element) => element.remove());
 }
 
 init();
