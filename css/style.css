@@ -15,6 +15,7 @@ h1 {
 p {
   text-align: center;
   font-size: 2.5vh;
+  color: darkturquoise;
 }
 
 .my-icon {
@@ -26,18 +27,16 @@ p {
   font-size: 3.25vh;
 }
 
-/* .my-icon {
-  height: 10vw;
-  width: 10vw;
+.bottom-button {
+  border-color: dimgray;
+  color: darkturquoise;
 }
-
-.go-button {
-  font-size: 6.5vw;
-}*/
 
 .next-button {
   width: 55vw;
   font-size: 2.75vh;
+  background-color: darkturquoise;
+  border-color: #7da4a9;
 }
 
 .my-scroll-box {

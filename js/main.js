@@ -137,7 +137,7 @@ function change_page(header_text, next_button, hint_text, return_button) {
     //node.style.backgroundImage = "img/icons/arrow-counterclockwise.svg";
     node.textContent = "";
     node.addEventListener("click", reset);
-    node.classList.add("align-self-end", "rounded-circle", "btn-outline-primary", "btn-lg", "p-4")
+    node.classList.add("align-self-end", "rounded-circle", "btn-outline-primary", "btn-lg", "p-4", "bottom-button")
     bot_container.appendChild(node);
     let button_node = node; //store it
 
@@ -153,7 +153,7 @@ function change_page(header_text, next_button, hint_text, return_button) {
     //node.style.backgroundImage = "img/icons/arrow-right.svg";
     node.textContent = "GO";
     node.addEventListener("click", next_page);
-    node.classList.add("align-self-end", "rounded-circle", "btn-outline-primary", "btn-lg", "p-4", "go-button")
+    node.classList.add("align-self-end", "rounded-circle", "btn-outline-primary", "btn-lg", "p-4", "go-button", "bottom-button")
     bot_container.appendChild(node);
   }
 }
