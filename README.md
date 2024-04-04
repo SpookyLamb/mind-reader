@@ -1,4 +1,2 @@
-# vanilla-js
-## A template repo for a vanilla JavaScript repository
-
-Select 'Use this template'.
+# Mind Reader
+It's an app that can read your mind!
