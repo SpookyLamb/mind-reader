@@ -110,12 +110,12 @@ function change_page(header_text, next_button, hint_text, return_button) {
 
   top_container.appendChild(node);
 
-  // middle elements
+  // end elements
   if (next_button) { // empty string is FALSE and ignored
     node = instance_button();
     node.textContent = next_button;
     node.addEventListener("click", next_page);
-    node.classList.add("p-3", "btn-primary")
+    node.classList.add("p-3", "btn-primary", "next-button", "align-self-center")
     bot_container.appendChild(node);
   }
 
@@ -131,7 +131,6 @@ function change_page(header_text, next_button, hint_text, return_button) {
     bot_container.appendChild(node);
   }
 
-  // end elements
   if (return_button) {
     // create the return button that sends the page back to the first page
     node = instance_button();
