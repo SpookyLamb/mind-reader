@@ -36,7 +36,7 @@ const page_1 = {
 
 const page_2 = {
   screen_num: 2,
-  header: "Pick a number from 10-99!",
+  header: "Pick a number from 1-99!",
   return_button: true, // displays the return button
   next_button: "NEXT", // displays the text on the button
   hint_text: "When you have your number, click NEXT!",
@@ -199,7 +199,7 @@ function random_integer(min, max) { // returns a random integer between min and 
 }
 
 function fill_symbol_list(node) {
-  // randomly assign symbols to each number between 10 and 99, repeating only once every symbol has been used
+  // randomly assign symbols to each number between 0 and 99, repeating only once every symbol has been used
   // one symbol is selected to be the special symbol for integers divisible by 9 (18, 27, etc)
   // these integers are only ever to receive that symbol, never another
 
@@ -214,7 +214,7 @@ function fill_symbol_list(node) {
   const symbol_array_pool = Array.from(symbol_array_copy); // now save a semi-permanent copy of that new array, missing the special symbol
 
   // now fill out our node's text content with the symbols, including <br> as a line break between each one
-  for (let i = 10; i <= 99; i++) { // now we iterate, dishing out special symbols to each number between 10 and 99, inclusive, EXCEPT multiples of 9
+  for (let i = 0; i <= 99; i++) { // now we iterate, dishing out special symbols to each number between 0 and 99, inclusive, EXCEPT multiples of 9
     if (i % 9 == 0) { // divisible by 9
       node.textContent += String(i) + " - " + ninth_symbol + "<br />";
       continue; // skip the rest for this loop
