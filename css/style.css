@@ -7,7 +7,21 @@ body {
 h1 {
   font-style: bold;
   color: dimgray;
-  font-size: 15vw;
+  font-size: 7vh;
   text-align: center;
   flex-wrap: wrap;
+}
+
+p {
+  text-align: center;
+  font-size: 5vw;
+}
+
+.my-icon {
+  height: 10vw;
+  width: 10vw;
+}
+
+.go-button {
+  font-size: 6.5vw;
 }

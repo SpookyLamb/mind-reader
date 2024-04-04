@@ -96,7 +96,7 @@ function change_page(header_text, next_button, hint_text, return_button) {
 
   // top elements
   let node = document.createElement("h1");
-  node.classList.add("m-5")
+  node.classList.add("align-self-top", "my-2")
   node.textContent = header_text;
 
   if (current_screen == 5) { // special override for the fifth screen to show the symbols and enable scrolling
@@ -113,12 +113,13 @@ function change_page(header_text, next_button, hint_text, return_button) {
     node = instance_button();
     node.textContent = next_button;
     node.addEventListener("click", next_page);
+    node.classList.add("p-3", "btn-primary")
     main_container.appendChild(node);
   }
 
   if (hint_text) {
     node = document.createElement("p");
-    node.classList.add("m-5")
+    node.classList.add("my-1") //"ml-5", "mr-5", "mt-1", "mb-1"
 
     if (current_screen == 6) {
       hint_text = hint_text.replace("NINTH_SYMBOL", ninth_symbol);
@@ -133,22 +134,32 @@ function change_page(header_text, next_button, hint_text, return_button) {
     // create the return button that sends the page back to the first page
     node = instance_button();
     //node.style.backgroundImage = "img/icons/arrow-counterclockwise.svg";
-    node.textContent = "RESTART";
+    node.textContent = "";
     node.addEventListener("click", reset);
+    node.classList.add("align-self-end", "rounded-circle", "btn-outline-primary", "btn-lg", "p-4")
     main_container.appendChild(node);
+    let button_node = node; //store it
+
+    // add our image to the button
+    node = document.createElement("img");
+    node.src = "img/icons/arrow-counterclockwise.svg";
+    node.classList.add("my-icon");
+    button_node.appendChild(node);
+
   } else {
     // create the GO button that takes the player to the next page
     node = instance_button();
     //node.style.backgroundImage = "img/icons/arrow-right.svg";
     node.textContent = "GO";
     node.addEventListener("click", next_page);
+    node.classList.add("align-self-end", "rounded-circle", "btn-outline-primary", "btn-lg", "p-4", "go-button")
     main_container.appendChild(node);
   }
 }
 
 function instance_button() {
   const node = document.createElement("button");
-  node.classList.add("btn", "btn-outline-primary", "m-5")
+  node.classList.add("btn", "my-3")
   return node
 }
 
