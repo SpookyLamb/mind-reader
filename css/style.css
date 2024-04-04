@@ -14,7 +14,7 @@ h1 {
 
 p {
   text-align: center;
-  font-size: 5vw;
+  font-size: 2.5vh;
 }
 
 .my-icon {
@@ -24,4 +24,13 @@ p {
 
 .go-button {
   font-size: 6.5vw;
+}
+
+/*.next-button {
+  width: 50vw;
+  font-size: 4vw;
+}*/
+
+.my-scroll-box {
+  overflow: "scroll";
 }

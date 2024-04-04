@@ -63,7 +63,7 @@ const page_5 = {
   header: "SPECIAL_SYMBOLS",
   return_button: true,
   next_button: "REVEAL",
-  hint_text: "Find your new number. Note the symbol besides the number!",
+  hint_text: "Find your new number. Note the symbol next to it!",
 };
 
 const page_6 = {
@@ -71,7 +71,7 @@ const page_6 = {
   header: "NINTH_SYMBOL", // tells the script to display whatever symbol that it has selected for multiples of 9
   return_button: true,
   next_button: "",
-  hint_text: "Your symbol is: NINTH_SYMBOL",
+  hint_text: "Your symbol is:<br><br>NINTH_SYMBOL",
 };
 
 const pages = [page_1, page_2, page_3, page_4, page_5, page_6]
@@ -92,7 +92,9 @@ function load_page_data(obj) {
 
 // changes the page
 function change_page(header_text, next_button, hint_text, return_button) {
-  clear_child_elements(main_container);
+  //clear_child_elements(main_container);
+  clear_child_elements(top_container)
+  clear_child_elements(bot_container)
 
   // top elements
   let node = document.createElement("h1");
@@ -100,13 +102,13 @@ function change_page(header_text, next_button, hint_text, return_button) {
   node.textContent = header_text;
 
   if (current_screen == 5) { // special override for the fifth screen to show the symbols and enable scrolling
-    node.style.overflow = "scroll";
+    //node.classList.add("my-scroll-box")
     fill_symbol_list(node);
   } else if (current_screen == 6) { // special override
     node.textContent = ninth_symbol; // randomized on the previous screen
   }
 
-  main_container.appendChild(node);
+  top_container.appendChild(node);
 
   // middle elements
   if (next_button) { // empty string is FALSE and ignored
@@ -114,19 +116,19 @@ function change_page(header_text, next_button, hint_text, return_button) {
     node.textContent = next_button;
     node.addEventListener("click", next_page);
     node.classList.add("p-3", "btn-primary")
-    main_container.appendChild(node);
+    bot_container.appendChild(node);
   }
 
   if (hint_text) {
     node = document.createElement("p");
-    node.classList.add("my-1") //"ml-5", "mr-5", "mt-1", "mb-1"
+    node.classList.add("my-1")
 
     if (current_screen == 6) {
       hint_text = hint_text.replace("NINTH_SYMBOL", ninth_symbol);
     }
 
-    node.textContent = hint_text;
-    main_container.appendChild(node);
+    node.innerHTML = hint_text;
+    bot_container.appendChild(node);
   }
 
   // end elements
@@ -137,7 +139,7 @@ function change_page(header_text, next_button, hint_text, return_button) {
     node.textContent = "";
     node.addEventListener("click", reset);
     node.classList.add("align-self-end", "rounded-circle", "btn-outline-primary", "btn-lg", "p-4")
-    main_container.appendChild(node);
+    bot_container.appendChild(node);
     let button_node = node; //store it
 
     // add our image to the button
@@ -153,7 +155,7 @@ function change_page(header_text, next_button, hint_text, return_button) {
     node.textContent = "GO";
     node.addEventListener("click", next_page);
     node.classList.add("align-self-end", "rounded-circle", "btn-outline-primary", "btn-lg", "p-4", "go-button")
-    main_container.appendChild(node);
+    bot_container.appendChild(node);
   }
 }
 
