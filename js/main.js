@@ -100,10 +100,10 @@ function change_page(header_text, next_button, hint_text, return_button) {
   node.textContent = header_text;
 
   if (current_screen == 5) { // special override for the fifth screen to show the symbols and enable scrolling
-    node.style.overflow = "scroll"
-    fill_symbol_list(node)
+    node.style.overflow = "scroll";
+    fill_symbol_list(node);
   } else if (current_screen == 6) { // special override
-    node.textContent = ninth_symbol // randomized on the previous screen
+    node.textContent = ninth_symbol; // randomized on the previous screen
   }
 
   main_container.appendChild(node);
@@ -204,7 +204,7 @@ function fill_symbol_list(node) {
   // now fill out our node's text content with the symbols, including <br> as a line break between each one
   for (let i = 10; i <= 99; i++) { // now we iterate, dishing out special symbols to each number between 10 and 99, inclusive, EXCEPT multiples of 9
     if (i % 9 == 0) { // divisible by 9
-      node.textContent += String(i) + " - " + ninth_symbol; //TODO: line breaks
+      node.textContent += String(i) + " - " + ninth_symbol + "<br />";
       continue; // skip the rest for this loop
     } // else, 
 
@@ -217,10 +217,15 @@ function fill_symbol_list(node) {
     symbol_array_copy.splice(random_number, 1); // ...and remove it from our copy!
 
     // finally, add it to our textContent
-    node.textContent += String(i) + " - " + result_symbol; //TODO: line breaks
+    node.textContent += String(i) + " - " + result_symbol + "<br />";
     
     // continue,
   }
+
+  // after we get done with the above, we need to convert our "<br>" strings into actual html
+  let old_text = node.textContent;
+  node.textContent = '';
+  node.innerHTML = old_text;
 }
 
 init();
