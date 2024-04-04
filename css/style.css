@@ -2,10 +2,43 @@
 
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
-  margin: 2em;
 }
 
 h1 {
-  font-style: italic;
-  color: pink;
+  font-style: bold;
+  color: dimgray;
+  font-size: 6.5vh;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+p {
+  text-align: center;
+  font-size: 2.5vh;
+  color: darkturquoise;
+}
+
+.my-icon {
+  height: 5vh;
+  width: 5vh;
+}
+
+.go-button {
+  font-size: 3.25vh;
+}
+
+.bottom-button {
+  border-color: dimgray;
+  color: darkturquoise;
+}
+
+.next-button {
+  width: 55vw;
+  font-size: 2.75vh;
+  background-color: darkturquoise;
+  border-color: #7da4a9;
+}
+
+.my-scroll-box {
+  overflow: "scroll";
 }
