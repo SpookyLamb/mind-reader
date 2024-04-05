@@ -16,6 +16,7 @@
 //  - animate the transition between pages
 
 // track the current screen
+let is_mobile = false;
 let current_screen = 1;
 let ninth_symbol = "&"; // default
 const symbol_array = ["@", "#", "$", "%", "&", "*", "A", "B", "C", "D"]; // contains 10 symbols total
@@ -23,7 +24,6 @@ const symbol_array = ["@", "#", "$", "%", "&", "*", "A", "B", "C", "D"]; // cont
 // grab our containers
 const main_container = document.getElementById("main");
 const top_container = document.getElementById("top");
-const mid_container = document.getElementById("middle");
 const bot_container = document.getElementById("bottom");
 
 const page_1 = {
@@ -77,7 +77,31 @@ const page_6 = {
 const pages = [page_1, page_2, page_3, page_4, page_5, page_6]
 
 function init() {
-  load_page_data(page_1);
+  is_mobile = is_device_mobile();
+  load_new_page(page_1);
+}
+
+function is_device_mobile() {
+  const minWidth = 768; // Minimum width for desktop devices
+  return window.innerWidth < minWidth || screen.width < minWidth;
+}
+
+function redo_animation() {
+  main_container.classList.add("main-animation")
+}
+
+function load_new_page(obj) {
+  //changes the page and handles animations
+
+  //to repeat an animation, we need to remove and then re-add the class after a small delay
+  main_container.classList.remove("main-animation");
+
+  if (is_mobile) {
+    setTimeout(redo_animation, 50);
+    setTimeout(load_page_data, 50, obj);
+  } else {
+    load_page_data(obj);
+  }
 }
 
 function load_page_data(obj) {
@@ -178,13 +202,13 @@ function next_page() {
     }
   }
 
-  load_page_data(next_screen);
+  load_new_page(next_screen);
 }
 
 function reset() {
   // resets to the first page
   current_screen = 1;
-  load_page_data(page_1);
+  load_new_page(page_1);
 }
 
 function clear_child_elements(parent_element) {
