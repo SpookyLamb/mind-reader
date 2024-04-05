@@ -77,24 +77,17 @@ const page_6 = {
 const pages = [page_1, page_2, page_3, page_4, page_5, page_6]
 
 function init() {
-  is_device_mobile();
+  is_mobile = is_device_mobile();
   load_new_page(page_1);
 }
 
-function animate_slide_in() {
-  // initiates the slide-in animation of the main page
-  main_container.style.animationPlayState = "running";
-}
-
-function animate_slide_out() {
-  // initiates the slide-out animation of the main page
-  main_container.style.animationDirection = "reverse";
-  main_container.style.animationPlayState = "running";
+function is_device_mobile() {
+  const minWidth = 768; // Minimum width for desktop devices
+  return window.innerWidth < minWidth || screen.width < minWidth;
 }
 
 function redo_animation() {
   main_container.classList.add("main-animation")
-  //setTimeout(animate_slide_in, 1);
 }
 
 function load_new_page(obj) {
@@ -102,8 +95,13 @@ function load_new_page(obj) {
 
   //to repeat an animation, we need to remove and then re-add the class after a small delay
   main_container.classList.remove("main-animation");
-  setTimeout(redo_animation, 50);
-  setTimeout(load_page_data, 50, obj);
+
+  if (is_mobile) {
+    setTimeout(redo_animation, 50);
+    setTimeout(load_page_data, 50, obj);
+  } else {
+    load_page_data(obj);
+  }
 }
 
 function load_page_data(obj) {

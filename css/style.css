@@ -47,7 +47,7 @@ p {
 
 .main-animation {
   animation-name: slidein;
-  animation-duration: 0.25s;
+  animation-duration: 0.15s;
   animation-timing-function: linear;
   animation-direction: normal;
   animation-play-state: running;
