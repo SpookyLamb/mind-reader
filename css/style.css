@@ -2,6 +2,8 @@
 
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  overflow: hidden;
+  
 }
 
 h1 {
@@ -42,3 +44,34 @@ p {
 .my-scroll-box {
   overflow: "scroll";
 }
+
+.main-animation {
+  animation-name: slidein;
+  animation-duration: 0.25s;
+  animation-timing-function: linear;
+  animation-direction: normal;
+  animation-play-state: running;
+  animation-iteration-count: 1;
+  animation-fill-mode: none;
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 150%;
+  }
+
+  to {
+    margin-left: 0%;
+  }
+}
+
+/* @keyframes slideout {
+  from {
+    margin-left: 0%;
+  }
+
+  to {
+    margin-left: 150%;
+  }
+
+} */
